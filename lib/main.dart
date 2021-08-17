@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sizer/sizer.dart';
-import 'package:todo/view/homepage_ui.dart';
+import 'package:todo/view/todo_homepage_ui.dart';
 
 void main() {
   runApp(const ProviderScope(child: TodoListApp()));
