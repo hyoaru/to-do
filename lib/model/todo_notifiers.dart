@@ -21,7 +21,27 @@ class TodoList extends StateNotifier<List<TodoObjectModel>> {
         );
       }
       // else
-      //   TodoObjectModel;
+      // TodoObjectModel;
     }
+  }
+
+  void todoEdit({required String id, required String description}) {
+    state = [
+      for (final TodoObjectModel in state)
+        if (TodoObjectModel.id == id)
+          TodoObjectModel(
+            id: TodoObjectModel.id,
+            description: description,
+            isCompleted: TodoObjectModel.isCompleted,
+          )
+        else
+          TodoObjectModel,
+    ];
+  }
+
+  void todoRemove(TodoObjectModel target) {
+    state = state
+        .where((todoObjectModel) => todoObjectModel.id != target.id)
+        .toList();
   }
 }
