@@ -1,7 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo/model/todo_model.dart';
 import 'package:todo/model/todo_notifiers.dart';
-import 'package:todo/model/todo_model.dart';
 
 final todoListProvider =
     StateNotifierProvider<TodoList, List<TodoObjectModel>>((ref) {
@@ -15,7 +14,7 @@ final todoListProvider =
 enum TodoListFilter { all, active, completed }
 
 final todoListFilterProvider =
-    StateProvider<TodoListFilter>((_) => TodoListFilter.all);
+    StateProvider<TodoListFilter>((ref) => TodoListFilter.all);
 
 final uncompletedTodosCount = Provider<int>((ref) {
   return ref
@@ -28,12 +27,20 @@ final filteredTodos = Provider<List<TodoObjectModel>>((ref) {
   final filters = ref.watch(todoListFilterProvider);
   final todos = ref.watch(todoListProvider);
 
+  List<TodoObjectModel> filteredTodos;
+
   switch (filters.state) {
     case TodoListFilter.completed:
-      return todos.where((todos) => todos.isCompleted).toList();
+      filteredTodos = todos.where((todos) => todos.isCompleted).toList();
+      break;
     case TodoListFilter.active:
-      return todos.where((todos) => !todos.isCompleted).toList();
+      filteredTodos = todos.where((todos) => !todos.isCompleted).toList();
+      break;
     case TodoListFilter.all:
-      return todos;
+    default:
+      filteredTodos = todos;
+      break;
   }
+
+  return filteredTodos;
 });
