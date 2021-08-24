@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sizer/sizer.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:todo/viewmodel/todo_providers.dart';
 
 class HomepageUI extends HookWidget {
   const HomepageUI({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final todos = useProvider(filteredTodos);
     final todoTextController = useTextEditingController();
 
     return Scaffold(
@@ -22,7 +25,7 @@ class HomepageUI extends HookWidget {
                 height: 10.h,
               ),
               Column(
-                children: [],
+                children: [...todos.map((e) => Text(e.description))],
               ),
             ],
           ),
