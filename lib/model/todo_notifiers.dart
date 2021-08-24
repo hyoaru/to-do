@@ -1,4 +1,4 @@
-import 'package:state_notifier/state_notifier.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo/model/todo_model.dart';
 
 class TodoList extends StateNotifier<List<TodoObjectModel>> {
@@ -12,36 +12,34 @@ class TodoList extends StateNotifier<List<TodoObjectModel>> {
   }
 
   void todoToggle(String id) {
-    for (final TodoObjectModel in state) {
-      if (TodoObjectModel.id == id) {
-        TodoObjectModel(
-          id: TodoObjectModel.id,
-          description: TodoObjectModel.description,
-          isCompleted: !TodoObjectModel.isCompleted,
-        );
-      }
-      // else
-      // TodoObjectModel;
-    }
+    state = [
+      for (final todo in state)
+        if (todo.id == id)
+          TodoObjectModel(
+            description: todo.description,
+            id: todo.id,
+            isCompleted: todo.isCompleted,
+          )
+        else
+          todo,
+    ];
   }
 
   void todoEdit({required String id, required String description}) {
     state = [
-      for (final TodoObjectModel in state)
-        if (TodoObjectModel.id == id)
+      for (final todo in state)
+        if (todo.id == id)
           TodoObjectModel(
-            id: TodoObjectModel.id,
+            id: todo.id,
             description: description,
-            isCompleted: TodoObjectModel.isCompleted,
+            isCompleted: todo.isCompleted,
           )
         else
-          TodoObjectModel,
+          todo,
     ];
   }
 
   void todoRemove(TodoObjectModel target) {
-    state = state
-        .where((todoObjectModel) => todoObjectModel.id != target.id)
-        .toList();
+    state = state.where((todo) => todo.id != target.id).toList();
   }
 }
