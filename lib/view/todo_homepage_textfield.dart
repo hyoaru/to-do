@@ -1,5 +1,7 @@
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/viewmodel/todo_providers.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TodoTextField extends StatelessWidget {
   const TodoTextField({
@@ -20,7 +22,8 @@ class TodoTextField extends StatelessWidget {
         // labelStyle: Textsty
       ),
       onSubmitted: (value) {
-        //
+        context.read(todoListProvider.notifier).todoAdd(value);
+        todoTextController.clear();
       },
     );
   }
