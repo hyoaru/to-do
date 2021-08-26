@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sizer/sizer.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo/model/todo_model.dart';
 import 'package:todo/view/todo_homepage_list_item.dart';
 import 'package:todo/view/todo_homepage_textfield.dart';
 import 'package:todo/view/todo_homepage_title.dart';

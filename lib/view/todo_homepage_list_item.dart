@@ -1,12 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo/view/todo_homepage_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:todo/model/todo_model.dart';
 import 'package:todo/viewmodel/todo_providers.dart';
-import 'package:todo/model/todo_notifiers.dart';
-
-late final ProviderReference ref;
 
 class TodoItem extends HookWidget {
   const TodoItem(this.todo, {Key? key}) : super(key: key);
@@ -31,11 +27,11 @@ class TodoItem extends HookWidget {
           if (focused) {
             textEdittingController.text = todo.description;
           } else {
-            final value = ref.read(todoListProvider.notifier).todoEdit(
+            context.read(todoListProvider.notifier).todoEdit(
                   id: todo.id,
                   description: textEdittingController.text,
                 );
-            return value;
+            // return value;
           }
         },
         child: ListTile(
@@ -46,9 +42,8 @@ class TodoItem extends HookWidget {
           leading: Checkbox(
               value: todo.isCompleted,
               onChanged: (value) {
-                final value =
-                    context.read(todoListProvider.notifier).todoToggle(todo.id);
-                return value;
+                context.read(todoListProvider.notifier).todoToggle(todo.id);
+                // return value;
               }),
           title: isFocused
               ? TextField(
