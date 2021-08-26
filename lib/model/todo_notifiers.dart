@@ -18,7 +18,7 @@ class TodoList extends StateNotifier<List<TodoObjectModel>> {
           TodoObjectModel(
             description: todo.description,
             id: todo.id,
-            isCompleted: todo.isCompleted,
+            isCompleted: !todo.isCompleted,
           )
         else
           todo,
