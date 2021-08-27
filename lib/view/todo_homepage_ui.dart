@@ -7,12 +7,12 @@ import 'package:todo/view/todo_homepage_textfield.dart';
 import 'package:todo/view/todo_homepage_title.dart';
 import 'package:todo/viewmodel/todo_providers.dart';
 
-class HomepageUI extends HookWidget {
+class HomepageUI extends HookConsumerWidget {
   const HomepageUI({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final todos = useProvider(filteredTodos);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todos = ref.watch(filteredTodos);
     final todoTextController = useTextEditingController();
 
     return Scaffold(
@@ -35,7 +35,7 @@ class HomepageUI extends HookWidget {
                     Dismissible(
                       key: ValueKey(todos[i].id),
                       onDismissed: (_) {
-                        context
+                        ref
                             .read(todoListProvider.notifier)
                             .todoRemove(todos[i]);
                       },

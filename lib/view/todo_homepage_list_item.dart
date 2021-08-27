@@ -4,13 +4,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:todo/model/todo_model.dart';
 import 'package:todo/viewmodel/todo_providers.dart';
 
-class TodoItem extends HookWidget {
+class TodoItem extends HookConsumerWidget {
   const TodoItem(this.todo, {Key? key}) : super(key: key);
 
   final TodoObjectModel todo;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final itemFocusNode = useFocusNode();
     useListenable(itemFocusNode);
     final isFocused = itemFocusNode.hasFocus;
@@ -27,7 +27,7 @@ class TodoItem extends HookWidget {
           if (focused) {
             textEdittingController.text = todo.description;
           } else {
-            context.read(todoListProvider.notifier).todoEdit(
+            ref.read(todoListProvider.notifier).todoEdit(
                   id: todo.id,
                   description: textEdittingController.text,
                 );
@@ -42,7 +42,7 @@ class TodoItem extends HookWidget {
           leading: Checkbox(
               value: todo.isCompleted,
               onChanged: (value) {
-                context.read(todoListProvider.notifier).todoToggle(todo.id);
+                ref.read(todoListProvider.notifier).todoToggle(todo.id);
                 // return value;
               }),
           title: isFocused

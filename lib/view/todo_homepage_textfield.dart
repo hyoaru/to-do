@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:todo/viewmodel/todo_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class TodoTextField extends StatelessWidget {
+class TodoTextField extends ConsumerWidget {
   const TodoTextField({
     Key? key,
     required this.todoTextController,
@@ -12,7 +12,7 @@ class TodoTextField extends StatelessWidget {
   final TextEditingController todoTextController;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return TextField(
       controller: todoTextController,
       decoration: InputDecoration(
@@ -22,7 +22,7 @@ class TodoTextField extends StatelessWidget {
         // labelStyle: Textsty
       ),
       onSubmitted: (value) {
-        context.read(todoListProvider.notifier).todoAdd(value);
+        ref.read(todoListProvider.notifier).todoAdd(value);
         todoTextController.clear();
       },
     );
