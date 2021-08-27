@@ -16,6 +16,8 @@ enum TodoListFilter { all, active, completed }
 final todoListFilterProvider =
     StateProvider<TodoListFilter>((ref) => TodoListFilter.all);
 
+final todoListSearchProvider = StateProvider((_) => '');
+
 final uncompletedTodosCount = Provider<int>((ref) {
   return ref
       .watch(todoListProvider)
@@ -26,6 +28,7 @@ final uncompletedTodosCount = Provider<int>((ref) {
 final filteredTodos = Provider<List<TodoObjectModel>>((ref) {
   final filters = ref.watch(todoListFilterProvider);
   final todos = ref.watch(todoListProvider);
+  final search = ref.watch(todoListSearchProvider);
 
   List<TodoObjectModel> filteredTodos;
 
@@ -42,5 +45,11 @@ final filteredTodos = Provider<List<TodoObjectModel>>((ref) {
       break;
   }
 
-  return filteredTodos;
+  if (search.state.isEmpty) {
+    return filteredTodos;
+  } else {
+    return filteredTodos
+        .where((todo) => todo.description.contains(search.state))
+        .toList();
+  }
 });
