@@ -1,9 +1,9 @@
-import 'package:equatable/equatable.dart';
+// import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
 
 var _uuid = const Uuid();
 
-class TodoObjectModel extends Equatable {
+class TodoObjectModel {
   TodoObjectModel({
     required this.description,
     this.isCompleted = false,
@@ -15,5 +15,7 @@ class TodoObjectModel extends Equatable {
   final bool isCompleted;
 
   @override
-  List<Object?> get props => [id, description, isCompleted];
+  String toString() {
+    return 'TodoObjectModel(description: $description, isCompleted: $isCompleted)';
+  }
 }
